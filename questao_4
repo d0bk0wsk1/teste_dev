@@ -1,0 +1,44 @@
+--Para criar as tabelas e o relacionamento
+
+CREATE TABLE estados (
+    id_estado INT AUTO_INCREMENT PRIMARY KEY,
+    sigla CHAR(2) NOT NULL,
+    nome VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE tiposTelefone (
+    id_tipo INT AUTO_INCREMENT PRIMARY KEY,
+    descricao VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE clientes (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    razao_social VARCHAR(100) NOT NULL,
+    estado_id INT,
+    FOREIGN KEY (estado_id) REFERENCES estados(id_estado)
+);
+
+CREATE TABLE telefones (
+    id_telefone INT AUTO_INCREMENT PRIMARY KEY,
+    numero VARCHAR(15) NOT NULL,
+    tipo_id INT,
+    cliente_id INT,
+    FOREIGN KEY (tipo_id) REFERENCES tiposTelefone(id_tipo),
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id_cliente)
+);
+
+
+-- Para realizar a consulta 
+
+SELECT 
+    c.id_cliente,
+    c.razao_social,
+    t.numero AS telefone
+FROM 
+    clientes c
+INNER JOIN telefones tel 
+    ON c.id_cliente = tel.cliente_id
+INNER JOIN estados est 
+    ON c.estado_id = est.id_estado
+WHERE 
+    est.sigla = 'SP';

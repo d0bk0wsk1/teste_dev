@@ -1,0 +1,19 @@
+# dados fixos para o vetor de faturamento diário
+faturamento_diario = [1000, 2000, 0, 500, 0, 0, 3000, 250, 100, 300, 120]
+
+# Filtra apenas os dias com faturamento (ignora dias com faturamento 0)
+faturamento_filtrado = [faturamento for faturamento in faturamento_diario if faturamento > 0]
+
+# Calculando o maior e o menor faturamento
+menor_faturamento = min(faturamento_filtrado)
+maior_faturamento = max(faturamento_filtrado)
+
+# Calculando a média
+media_anual = sum(faturamento_filtrado) / len(faturamento_filtrado)
+
+# Conta o número de dias com faturamento acima da média anual
+dias_acima_da_media = sum(1 for faturamento in faturamento_filtrado if faturamento > media_anual)
+
+print(f"Menor valor de faturamento em um dia do ano: {menor_faturamento:.2f}")
+print(f"Maior valor de faturamento em um dia do ano: {maior_faturamento:.2f}")
+print(f"Número de dias com faturamento superior à média anual: {dias_acima_da_media}")
